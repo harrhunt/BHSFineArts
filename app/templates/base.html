@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/templates/base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/components/form.css') }}">
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+    <title>BHSFA{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div id="page-container">
+    <header>
+        {% block header %}
+            <a id="home-link" href="/">BHSFA</a>
+            <nav>
+                {% block navbar %}
+
+                {% endblock %}
+            </nav>
+        {% endblock %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        {% block footer %}
+
+        {% endblock %}
+    </footer>
+</div>
+</body>
+</html>

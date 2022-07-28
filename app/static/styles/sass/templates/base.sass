@@ -1,0 +1,70 @@
+@import ../base/variables
+@import ../base/mixins
+
+html
+  box-sizing: border-box
+  font-family: $font-stack
+  font-size: 16px
+
+*, *::before, *::after
+  box-sizing: inherit
+
+html, body
+  margin: 0
+  padding: 0
+  background-color: $base-light
+
+#page-container
+  position: relative
+  min-height: 100vh
+
+header
+  @include grid(1fr 3fr 1fr, 1fr, $justify-items: center, $align-items: center)
+  position: sticky
+  top: 0
+  left: 0
+  width: 100%
+  height: 110px
+  background: $base-dark
+  z-index: 99
+
+#home-link
+  font-weight: bold
+  font-size: 2.5rem
+  color: $accent
+  text-decoration: none
+  place-self: start
+  align-self: center
+  margin-left: 25px
+
+nav
+  @include flex-box(space-around, center, center)
+  width: clamp(60%, 400px, 100%)
+  font-size: 1.5rem
+
+  a
+    color: $white
+    text-decoration: none
+    @include transition(color 300ms ease)
+
+    &:hover
+      color: $accent
+
+#logout
+  font-size: 1.5rem
+  color: $white
+  text-decoration: none
+  @include transition(color 300ms ease)
+
+  &:hover
+    color: $accent
+
+main
+  padding-bottom: $footer-height
+
+footer
+  position: absolute
+  bottom: 0
+  width: 100%
+  height: $footer-height
+  background: $base-dark

@@ -1,0 +1,63 @@
+@import ../base/variables
+@import ../base/mixins
+@import ../base/placeholders
+
+#splash-screen
+  width: 100%
+  height: 70vh
+  overflow: hidden
+  position: relative
+
+  video
+    height: 100%
+    width: 177.7777778vh
+    min-width: 100%
+    min-height: 56.25vw
+    position: absolute
+    @extend %center
+
+
+#department-navigation
+  @include grid($columns: auto, $rows: 1fr)
+  grid-auto-flow: column
+  width: 100%
+  height: 45vh
+
+  a
+    @include filter(grayscale(100%))
+    @include transition(filter 0.5s ease)
+    width: 100%
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center
+    color: $white
+    text-decoration: none
+
+    &:hover
+      @include filter(grayscale(0) saturate(115%))
+
+.department-navigation-label
+  @extend %center
+  font-size: 2rem
+  position: absolute
+  min-width: 80%
+  text-align: center
+  background: adjust-color($black, $alpha: -0.6)
+
+
+@media only screen and (max-width: 1080px)
+
+  .department-navigation-label
+    font-size: 1.5rem
+
+@media only screen and (max-width: 768px)
+
+  #department-navigation
+    grid-auto-flow: row
+    grid-row-gap: 15px
+    height: auto
+    margin: 15px auto
+
+    a
+      height: 150px
+      background-attachment: fixed

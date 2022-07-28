@@ -1,0 +1,44 @@
+@import variables
+@import mixins
+
+%no-select
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+%center
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+%button
+  @extend %no-select
+  flex-shrink: 0
+  background: $accent
+  border: 1px solid $accent
+  border-radius: 8px
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px
+  box-sizing: border-box
+  color: $white
+  cursor: pointer
+  display: inline-block
+  font-size: 1.25rem
+  font-weight: bold
+  line-height: 1.25rem
+  min-height: 40px
+  outline: 0
+  padding: 12px 14px
+  text-align: center
+  text-rendering: geometricprecision
+  text-transform: none
+  touch-action: manipulation
+  vertical-align: middle
+
+  &:hover, &:active
+    background-color: initial
+    background-position: 0 0
+    color: $accent
+
+  &:active
+    opacity: 0.5

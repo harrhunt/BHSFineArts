@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block navbar %}
+    <a href="#">Admin</a>
+    <a href="#">Faculty</a>
+    <a href="#">Events</a>
+    <a href="#">Files</a>
+{% endblock %}
+{% block header %}
+{{ super() }}
+<a id="logout" href="{{ url_for('admin.logout') }}">Logout</a>
+{% endblock %}
