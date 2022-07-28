@@ -189,3 +189,5 @@ app/static/styles/css
 .data/
 
 .sass-cache/
+
+app/static/**/excluded
