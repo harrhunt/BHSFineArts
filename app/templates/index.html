@@ -3,6 +3,10 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/templates/index.css') }}">
 {% endblock %}
+{% block header %}
+    {{ super() }}
+    <a id="staff-login" href="{{ url_for('admin.login') }}">Staff Login</a>
+{% endblock %}
 {% block content %}
     <div id="splash-screen">
         <video preload autoplay loop muted poster="{{ url_for('static', filename='/images/excluded/splash.jpg') }}">
@@ -12,7 +16,8 @@
     <div id="department-navigation">
         {% for department in departments %}
             {% set nav_image_url = url_for('static', filename='/images/excluded/' ~ department.name|lower|replace(" ", "-") ~ '-nav.jpg') %}
-            <a href="{{ url_for("main." ~ department.name|lower|replace(" ", "_")) }}" style="background-image: url('{{ nav_image_url }}')">
+            <a href="{{ url_for("main." ~ department.name|lower|replace(" ", "_")) }}"
+               style="background-image: url('{{ nav_image_url }}')">
                 <div class="department-navigation-label">{{ department.name }}</div>
             </a>
         {% endfor %}

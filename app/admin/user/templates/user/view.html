@@ -1,0 +1,5 @@
+{% extends "admin/admin.html" %}
+{% from "admin/macros.html" import user_def_list %}
+{% block content %}
+    {{ user_def_list(user) }}
+{% endblock %}

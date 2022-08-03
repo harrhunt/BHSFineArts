@@ -1,0 +1,28 @@
+@import ../base/variables
+@import ../base/mixins
+
+.data-table
+  background-color: $base-medium
+  width: clamp(60%, 650px, 100%)
+  margin: 25px auto
+  border-collapse: collapse
+
+  thead
+    text-align: left
+    font-size: 1.25rem
+    color: $black
+    background-color: $base-dark
+
+  tbody
+    text-align: center
+    color: $white
+
+  img
+    max-width: 150px
+
+  a
+    text-decoration: none
+    @include button($font-size: 1rem)
+
+  tr:nth-child(even)
+    background-color: $base-light

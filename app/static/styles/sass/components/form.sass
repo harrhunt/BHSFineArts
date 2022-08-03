@@ -2,12 +2,17 @@
 @import ../base/mixins
 @import ../base/placeholders
 
-form
+.form
   background-color: $base-medium
   width: clamp(35%, 600px, 95%)
   margin: 25px auto
   padding: 35px 50px
   color: $white
+
+  input[type='submit']
+    @include button()
+    margin: 15px auto
+    display: block
 
 .form-field
   border: none
@@ -18,6 +23,8 @@ form
 
   input
     font-size: 1rem
+
+  input:not([type='checkbox'])
     width: clamp(60%, 350px, 100%)
 
 .form-errors
@@ -33,7 +40,10 @@ form
     &::before
       @include bullet('•', $error)
 
-input[type='submit']
-  @extend %button
+.delete-form
+  width: 360px
   margin: 15px auto
-  display: block
+  text-align: center
+
+  input[type='submit']
+    @include button($error)

@@ -1,0 +1,6 @@
+{% extends "admin/admin.html" %}
+{% from "admin/macros.html" import faculty_def_list, delete %}
+{% block content %}
+    {{ faculty_def_list(faculty_member) }}
+    {{ delete(faculty_member.id) }}
+{% endblock %}

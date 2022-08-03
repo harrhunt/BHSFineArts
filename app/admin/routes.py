@@ -11,7 +11,7 @@ def login():
     form = LoginForm()
     if request.method == 'GET':
         if current_user.is_authenticated:
-            return redirect(url_for("admin.admin"))
+            return redirect(url_for("admin.index"))
         else:
             return render_template("admin/login.html", form=form)
     elif request.method == 'POST':
@@ -22,9 +22,9 @@ def login():
                     login_user(user, remember=form.remember.data)
                     next_loc = request.args.get('next')
                     if next_loc is not None:
-                        return redirect(next_loc[1:])
+                        return redirect(url_for(next_loc))
                     else:
-                        return redirect(url_for("admin.admin"))
+                        return redirect(url_for("admin.index"))
             form.password.errors.append("Invalid username and password combination!")
         if "csrf_token" in form.errors:
             form = LoginForm()
@@ -39,7 +39,7 @@ def logout():
     return redirect(url_for("main.index"))
 
 
-@bp.route('/admin')
+@bp.route('/')
 @login_required
-def admin():
+def index():
     return render_template("admin/admin.html")

@@ -1,0 +1,6 @@
+{% extends "admin/admin.html" %}
+{% from "admin/macros.html" import user_table %}
+{% block content %}
+    <a href="{{ url_for('admin.user.add') }}">Add User</a>
+    {{ user_table(user) }}
+{% endblock %}

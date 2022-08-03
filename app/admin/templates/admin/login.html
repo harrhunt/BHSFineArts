@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% from "macros.html" import fieldset %}
 {% block content %}
-    <form method="post" action="{{ url_for('admin.login', next=request.args.get('next')) }}">
+    <form class="form" method="post" action="{{ url_for('admin.login', next=request.endpoint) }}">
         {{ form.hidden_tag() }}
         {{ fieldset(form.email) }}
         {{ fieldset(form.password) }}
         {{ fieldset(form.remember) }}
-        <input type="submit" class="submit" value="Submit">
+        {{ form.submit }}
     </form>
 {% endblock %}

@@ -1,0 +1,226 @@
+{% from "macros.html" import fieldset %}
+{# Faculty Region #}
+{% macro faculty_form(form) -%}
+    <form class="form" action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ fieldset(form.first_name) }}
+        {{ fieldset(form.middle_name) }}
+        {{ fieldset(form.last_name) }}
+        {{ fieldset(form.position) }}
+        {{ fieldset(form.email) }}
+        {{ fieldset(form.department) }}
+        {{ form.submit }}
+    </form>
+{%- endmacro %}
+
+{% macro faculty_def_list(faculty_member) -%}
+    <dl class="data-def-list">
+        <dt>Name</dt>
+        <dd>
+            {{ faculty_member.first_name }}{{ " " ~ faculty_member.middle_name if faculty_member.middle_name }} {{ faculty_member.last_name }}
+        </dd>
+        <dt>Position</dt>
+        <dd>{{ faculty_member.position }}</dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{ faculty_member.email }}">{{ faculty_member.email }}</a></dd>
+        <dt>Department</dt>
+        <dd>{{ faculty_member.department.name }}</dd>
+    </dl>
+{% endmacro -%}
+
+{% macro faculty_table(faculty) -%}
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Edit</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for faculty_member in faculty %}
+            <tr data-id="{{ faculty_member.id }}">
+                <td>
+                    {{ faculty_member.first_name }}{{ " " ~ faculty_member.middle_name if faculty_member.middle_name }} {{ faculty_member.last_name }}
+                </td>
+                <td>{{ faculty_member.position }}</td>
+                <td>{{ faculty_member.email }}</td>
+                <td>{{ faculty_member.department.name }}</td>
+                <td><a href="{{ url_for('admin.faculty.edit', faculty_id=faculty_member.id) }}">edit</a></td>
+                <td><a href="{{ url_for('admin.faculty.view', faculty_id=faculty_member.id) }}">view</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro %}
+
+{# Event Region #}
+{% macro event_form(form) -%}
+    <form class="form" action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ fieldset(form.name) }}
+        {{ fieldset(form.start_datetime) }}
+        {{ fieldset(form.end_datetime) }}
+        {{ fieldset(form.price) }}
+        {{ fieldset(form.location) }}
+        {{ fieldset(form.street) }}
+        {{ fieldset(form.city) }}
+        {{ fieldset(form.state) }}
+        {{ fieldset(form.zip) }}
+        {{ fieldset(form.country) }}
+        {{ fieldset(form.department) }}
+        {{ form.submit }}
+    </form>
+{%- endmacro %}
+
+{% macro event_def_list(event) -%}
+    <dl class="data-def-list">
+        <dt>Name</dt>
+        <dd>{{ event.name }}</dd>
+        <dt>Start Date and Time</dt>
+        <dd>{{ event.start_datetime }}</dd>
+        <dt>End Date and Time</dt>
+        <dd>{{ event.end_datetime }}</dd>
+        <dt>Price</dt>
+        <dd>${{ event.price }}</dd>
+        <dt>Location Name</dt>
+        <dd>{{ event.location }}</dd>
+        <dt>Street</dt>
+        <dd>{{ event.street }}</dd>
+        <dt>City</dt>
+        <dd>{{ event.city }}</dd>
+        <dt>State</dt>
+        <dd>{{ event.state }}</dd>
+        <dt>Zip</dt>
+        <dd>{{ event.zip }}</dd>
+        <dt>Country</dt>
+        <dd>{{ event.country }}</dd>
+        <dt>Department</dt>
+        <dd>{{ event.department.name }}</dd>
+    </dl>
+{% endmacro -%}
+
+{% macro event_table(events) -%}
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start Date and Time</th>
+            <th>End Date and Time</th>
+            <th>Location Name</th>
+            <th>Department</th>
+            <th>Edit</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr data-id="{{ event.id }}">
+                <td>{{ event.name }}</td>
+                <td>{{ event.start_datetime }}</td>
+                <td>{{ event.end_datetime }}</td>
+                <td>{{ event.location }}</td>
+                <td>{{ event.department.name }}</td>
+                <td><a href="{{ url_for('admin.event.edit', event_id=event.id) }}">edit</a></td>
+                <td><a href="{{ url_for('admin.event.view', event_id=event.id) }}">view</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro %}
+
+{# User Region #}
+{% macro user_form(form) -%}
+    <form class="form" action="" method="post">
+        {{ form.hidden_tag() }}
+        {{ fieldset(form.email) }}
+        {{ fieldset(form.password) }}
+        {{ fieldset(form.password_confirm) }}
+        {{ form.submit }}
+    </form>
+{%- endmacro %}
+
+{% macro user_def_list(user) -%}
+    <dl class="data-def-list">
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+    </dl>
+{% endmacro -%}
+
+{% macro user_table(users) -%}
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr data-id="{{ user.id }}">
+                <td>{{ user.email }}</td>
+                <td><a href="{{ url_for('admin.user.edit', user_id=user.id) }}">edit</a></td>
+                <td><a href="{{ url_for('admin.user.view', user_id=user.id) }}">view</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro %}
+
+{# File Region #}
+{% macro file_form(form) -%}
+    <form class="form" action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ fieldset(form.files) }}
+        {{ form.submit }}
+    </form>
+{%- endmacro %}
+
+{% macro file_def_list(file) -%}
+    <dl class="data-def-list">
+        <dt>Name</dt>
+        <dd>{{ file.name }}</dd>
+        <dt>Date Added</dt>
+        <dd>{{ file.date_added }}</dd>
+        {% if file.is_image %}
+            <dt>File Preview</dt>
+            <dd><img alt="{{ file.name }}" src="{{ url_for('main.uploads', filename=file.id) }}"></dd>
+        {% endif %}
+    </dl>
+{% endmacro -%}
+
+{% macro file_table(files) -%}
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date Added</th>
+            <th>Preview</th>
+            <th>Edit</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for file in files %}
+            <tr data-id="{{ file.id }}">
+                <td>{{ file.name }}</td>
+                <td>{{ file.date_added }}</td>
+                <td>{% if file.is_image %}<img alt="{{ file.name }}" src="{{ url_for('main.uploads', filename=file.id) }}">{% endif %}</td>
+                <td><a href="{{ url_for('admin.file.edit', file_id=file.id) }}">edit</a></td>
+                <td><a href="{{ url_for('admin.file.view', file_id=file.id) }}">view</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro %}
+
+{% macro delete(id) -%}
+<form class="delete-form" action="" method="post" onsubmit="return confirm('Are you sure you want to delete this?')">
+    <input type="hidden" value="{{ id }}" name="id">
+    <input type="submit" value="Delete">
+</form>
+{%- endmacro %}

@@ -3,6 +3,9 @@ from app import db, login
 from datetime import datetime
 
 
+IMAGE_FILE_EXT = ['.jpeg', '.jpg', '.png', '.gif']
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -42,13 +45,18 @@ class File(db.Model):
 
     @classmethod
     def image_files(cls):
-        return cls.query.filter(cls.extension.in_(['jpeg', 'jpg', 'png', 'gif']))
+        return cls.query.filter(cls.extension.in_(IMAGE_FILE_EXT))
 
+    @property
     def name(self):
-        return f"{self.basename}.{self.extension}"
+        return f"{self.basename}{self.extension}"
+
+    @property
+    def is_image(self):
+        return self.extension in IMAGE_FILE_EXT
 
     def __repr__(self):
-        return f"<File {self.id}: {self.basename}.{self.extension}>"
+        return f"<File {self.id}: {self.basename}{self.extension}>"
 
 
 class Faculty(db.Model):
@@ -72,6 +80,7 @@ class Event(db.Model):
     start_datetime = db.Column(db.DateTime)
     end_datetime = db.Column(db.DateTime)
     price = db.Column(db.Float)
+    location = db.Column(db.String(255))
     street = db.Column(db.String(255))
     city = db.Column(db.String(255))
     state = db.Column(db.String(255))

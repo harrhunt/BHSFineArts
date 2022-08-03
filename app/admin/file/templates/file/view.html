@@ -1,0 +1,6 @@
+{% extends "admin/admin.html" %}
+{% from "admin/macros.html" import file_def_list, delete %}
+{% block content %}
+    {{ file_def_list(file) }}
+    {{ delete(file.id) }}
+{% endblock %}

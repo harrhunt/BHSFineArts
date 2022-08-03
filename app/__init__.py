@@ -28,7 +28,7 @@ def create_app(flask_configuration=SELECTED_CONFIG):
     app.register_blueprint(main_bp)
 
     from app.admin import bp as admin_bp
-    app.register_blueprint(admin_bp)
+    app.register_blueprint(admin_bp, url_prefix='/admin')
 
     return app
 

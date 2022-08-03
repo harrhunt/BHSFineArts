@@ -1,3 +1,6 @@
+@import variables
+@import placeholders
+
 @mixin flex-box($justify-content:initial, $align-content:initial, $align-items:initial, $wrap:wrap, $direction:row)
   display: -webkit-box
   display: -webkit-flex
@@ -46,3 +49,35 @@
   display: inline-block
   width: $width
   margin-left: -$width
+
+@mixin button($color: $accent, $text-color: $white, $font-size: 1.25rem)
+  @extend %no-select
+  flex-shrink: 0
+  background: $color
+  border: 1px solid $color
+  border-radius: 8px
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px
+  box-sizing: border-box
+  color: $text-color
+  cursor: pointer
+  display: inline-block
+  font-size: $font-size
+  font-weight: bold
+  line-height: $font-size
+  min-height: 40px
+  outline: 0
+  padding: 12px 14px
+  text-align: center
+  text-rendering: geometricprecision
+  text-transform: none
+  touch-action: manipulation
+  vertical-align: middle
+  @include transition(color 300ms ease, background-color 300ms ease, opacity 300ms ease)
+
+  &:hover, &:active
+    background-color: initial
+    background-position: 0 0
+    color: $color
+
+  &:active
+    opacity: 0.5

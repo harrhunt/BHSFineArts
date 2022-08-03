@@ -1,0 +1,6 @@
+{% extends "admin/admin.html" %}
+{% from "admin/macros.html" import event_def_list, delete %}
+{% block content %}
+    {{ event_def_list(event) }}
+    {{ delete(event.id) }}
+{% endblock %}
