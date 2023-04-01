@@ -1,6 +1,10 @@
+from __future__ import annotations
+from typing import List
+
 from flask_login import UserMixin
 from app import db, login
 from datetime import datetime
+from sqlalchemy.orm import Mapped
 
 
 IMAGE_FILE_EXT = ['.jpeg', '.jpg', '.png', '.gif']
@@ -8,15 +12,15 @@ IMAGE_FILE_EXT = ['.jpeg', '.jpg', '.png', '.gif']
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255))
+    id: Mapped[int] = db.mapped_column(primary_key=True)
+    email: Mapped[str] = db.mapped_column(db.String(255), unique=True)
+    password: Mapped[str] = db.mapped_column(db.String(255))
     # username = db.Column(db.String(24), unique=True)
     # is_verified = db.Column(db.Boolean(), default=False)
     # last_active = db.Column(db.DateTime())
     # reset_token = db.Column(db.String(255))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<User {self.id}: {self.email}>"
 
 
@@ -27,66 +31,68 @@ def user_loader(user_id):
 
 class Department(db.Model):
     __tablename__ = "departments"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True)
-    events = db.relationship('Event', backref='department')
-    faculty = db.relationship('Faculty', backref='department')
+    id: Mapped[int] = db.mapped_column(primary_key=True)
+    name: Mapped[str] = db.mapped_column(db.String(255), nullable=False, unique=True)
+    events: Mapped[List['Event']] = db.relationship(back_populates='department')
+    faculty: Mapped[List['Faculty']] = db.relationship(back_populates='department')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Department {self.id}: {self.name}>"
 
 
 class File(db.Model):
     __tablename__ = "files"
-    id = db.Column(db.Integer, primary_key=True)
-    basename = db.Column(db.String(255), nullable=False)
-    extension = db.Column(db.String(255))
-    date_added = db.Column(db.DateTime, default=datetime.utcnow())
+    id: Mapped[int] = db.mapped_column(primary_key=True)
+    basename: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
+    extension: Mapped[str] = db.mapped_column(db.String(255))
+    date_added: Mapped[datetime] = db.mapped_column(default=datetime.utcnow())
 
     @classmethod
-    def image_files(cls):
+    def image_files(cls) -> list['File']:
         return cls.query.filter(cls.extension.in_(IMAGE_FILE_EXT))
 
     @property
-    def name(self):
+    def name(self) -> str:
         return f"{self.basename}{self.extension}"
 
     @property
-    def is_image(self):
+    def is_image(self) -> bool:
         return self.extension in IMAGE_FILE_EXT
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<File {self.id}: {self.basename}{self.extension}>"
 
 
 class Faculty(db.Model):
     __tablename__ = "faculty"
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    middle_name = db.Column(db.String(255))
-    last_name = db.Column(db.String(255), nullable=False)
-    position = db.Column(db.String(255))
-    email = db.Column(db.String(255))
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
+    id: Mapped[int] = db.mapped_column(primary_key=True)
+    first_name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
+    middle_name: Mapped[str] = db.mapped_column(db.String(255))
+    last_name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
+    position: Mapped[str] = db.mapped_column(db.String(255))
+    email: Mapped[str] = db.mapped_column(db.String(255))
+    department_id: Mapped[int] = db.mapped_column(db.ForeignKey('departments.id'))
+    department: Mapped['Department'] = db.relationship(back_populates='faculty')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Faculty {self.id}: {self.first_name} {self.last_name} ({self.department.name})>"
 
 
 class Event(db.Model):
     __tablename__ = "events"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    start_datetime = db.Column(db.DateTime)
-    end_datetime = db.Column(db.DateTime)
-    price = db.Column(db.Float)
-    location = db.Column(db.String(255))
-    street = db.Column(db.String(255))
-    city = db.Column(db.String(255))
-    state = db.Column(db.String(255))
-    zip = db.Column(db.Integer)
-    country = db.Column(db.String(255))
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
+    id: Mapped[int] = db.mapped_column(primary_key=True)
+    name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
+    start_datetime: Mapped[datetime] = db.mapped_column()
+    end_datetime: Mapped[datetime] = db.mapped_column()
+    price: Mapped[float] = db.mapped_column()
+    location: Mapped[str] = db.mapped_column(db.String(255))
+    street: Mapped[str] = db.mapped_column(db.String(255))
+    city: Mapped[str] = db.mapped_column(db.String(255))
+    state: Mapped[str] = db.mapped_column(db.String(255))
+    zip: Mapped[int] = db.mapped_column()
+    country: Mapped[str] = db.mapped_column(db.String(255))
+    department_id: Mapped[int] = db.mapped_column(db.ForeignKey('departments.id'))
+    department: Mapped['Department'] = db.relationship(back_populates='events')
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<Event {self.id}: {self.name}"
