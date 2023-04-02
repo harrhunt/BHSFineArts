@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_required
 from app.admin.faculty import bp
-from app.models import Faculty, Department
+from app.models import Faculty, Department, File
 from app.forms import FacultyForm
 from app import db
 
@@ -18,6 +18,7 @@ def index():
 def add():
     form = FacultyForm()
     form.department.query = Department.query
+    form.image.query = File.query
     if form.validate_on_submit():
         new_faculty_member = Faculty()
         form.populate_obj(new_faculty_member)

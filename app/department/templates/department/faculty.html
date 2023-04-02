@@ -1,0 +1,11 @@
+{% extends "department/base.html" %}
+{% from "macros.html" import faculty_card %}
+{% block content %}
+    <h1 class="section-title">Faculty</h1>
+    {% for member in faculty %}
+        {{ faculty_card(member) }}
+        {% if not loop.last %}
+            <div class="event-separator"></div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
