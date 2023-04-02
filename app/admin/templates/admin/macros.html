@@ -123,8 +123,8 @@
         {% for event in events %}
             <tr data-id="{{ event.id }}">
                 <td>{{ event.name }}</td>
-                <td>{{ event.start_datetime }}</td>
-                <td>{{ event.end_datetime }}</td>
+                <td>{{ event.start_datetime.strftime("%a, %h %e, %G, %r") }}</td>
+                <td>{{ event.end_datetime.strftime("%a, %h %e, %G, %r") }}</td>
                 <td>{{ event.location }}</td>
                 <td>{{ event.department.name }}</td>
                 <td><a href="{{ url_for('admin.event.edit', event_id=event.id) }}">edit</a></td>
