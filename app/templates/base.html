@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>html { visibility: hidden; opacity: 0; }</style>
     {% block styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/templates/base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/components/form.css') }}">
     {% endblock %}
+    <style>html { visibility: visible; opacity: 1; }</style>
     {% block scripts %}
     {% endblock %}
     <title>BHSFA{% block title %}{% endblock %}</title>

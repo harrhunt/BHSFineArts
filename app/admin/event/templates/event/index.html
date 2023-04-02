@@ -1,6 +1,6 @@
 {% extends "admin/admin.html" %}
 {% from "admin/macros.html" import event_table %}
 {% block content %}
-    <a href="{{ url_for('admin.event.add') }}">Add Event</a>
+    <a class="btn-add-entity" href="{{ url_for('admin.event.add') }}">Add Event</a>
     {{ event_table(event) }}
 {% endblock %}
