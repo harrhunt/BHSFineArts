@@ -1,0 +1,100 @@
+@import ../base/variables
+@import ../base/mixins
+
+.event-card
+  @include grid(150px auto min-content, repeat(2, 2fr) repeat(4, 1fr), $column-gap: 15px)
+  position: relative
+  width: clamp(45vw, 600px, 100vw)
+  margin: 15px auto
+  //border: 1px solid $base-medium
+  //border-radius: 5px
+  //box-shadow: 2px 2px 8px -2px adjust-color($white, $alpha: -0.6)
+  color: $white
+
+.event-date
+  @include flex-box(center, center, center, $direction: column)
+  grid-column: 1 / span 1
+  grid-row: 1 / span 2
+  place-self: center
+  text-align: center
+  //padding: 15px
+  //position: relative
+
+  .event-day
+    font-size: 1.8rem
+    white-space: nowrap
+
+  .event-month
+    //position: absolute
+    //right: 50%
+    //bottom: -5px
+    //transform: translateX(50%)
+    font-size: 1.3rem
+    font-weight: bold
+    white-space: nowrap
+
+.event-name
+  grid-column: 2 / span 1
+  grid-row: 1 / span 2
+  font-size: 3rem
+  place-self: center start
+  padding: 15px 0 0 15px
+
+.event-time
+  grid-column: 1 / span 1
+  grid-row: 3 / span 1
+  place-self: start center
+
+.event-location
+  font-size: 1rem
+  //grid-column: 2 / span 1
+  //grid-row: 3 / span 1
+  //place-self: start
+
+.event-department
+  grid-column: 1 / span 1
+  grid-row: 4 / span 3
+  place-self: center
+  font-size: 2rem
+  text-align: center
+
+.event-address
+  @include flex-box(space-around, center, start, $direction: column)
+  grid-column: 2 / span 1
+  grid-row: 4 / span 3
+  place-self: stretch start
+
+.event-address-line
+  display: block
+
+.event-price
+  //@include flex-box(center, center)
+  //position: absolute
+  //top: 0
+  //right: 0
+  //aspect-ratio: 1 / 1
+  grid-column: 3 / span 1
+  grid-row: 1 / span 1
+  place-self: end center
+  font-size: 1.8rem
+  padding: 15px 15px 0 15px
+
+.event-separator
+  width: clamp(45vw, 600px, 100vw)
+  margin: 15px auto
+  height: 2px
+  background-color: $white
+
+.event-location, .event-address
+  padding-left: 25px
+
+@media only screen and (max-width: 768px)
+
+  .event-card
+    grid-template-columns: 100px auto auto
+
+  .event-name, .event-date .event-day
+    font-size: 2rem
+
+  .event-price
+    font-size: 1rem

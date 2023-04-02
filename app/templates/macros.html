@@ -1,13 +1,98 @@
-{% macro fieldset(field, classes="") -%}
+{% macro fieldset(field, label=True) -%}
     <fieldset class="form-field">
-        {{ field.label }}<!--
-        -->{{ field(class=classes) }}
+        {% if label %}{{ field.label }}{% endif %}<!--
+        -->{{ field(**kwargs) }}
         {% if field.errors %}
             <ul class="form-errors">
-            {% for error in field.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
             </ul>
         {% endif %}
     </fieldset>
+{%- endmacro %}
+
+{% macro condense_date(start, end, reversed=False) -%}
+    {% if reversed %}
+        {% if start.date() == end.date() %}
+            {{ start.strftime("%-e %h") }}
+        {% elif start.month == end.month %}
+            {{ start.strftime("%-e") }}-{{ end.strftime("%-e %h") }}
+        {% else %}
+            {{ start.strftime("%h %-e") }}-{{ end.strftime("%h %-e") }}
+        {% endif %}
+    {% else %}
+        {% if start.date() == end.date() %}
+            {{ start.strftime("%h %-e") }}
+        {% elif start.month == end.month %}
+            {{ start.strftime("%h %-e") }}-{{ end.strftime("%-e") }}
+        {% else %}
+            {{ start.strftime("%h %-e") }}-{{ end.strftime("%h %-e") }}
+        {% endif %}
+    {% endif %}
+{%- endmacro %}
+
+{% macro condense_day(start, end) -%}
+    {% if start.day != end.day or start.month != end.month %}
+        {{ start.day }}-{{ end.day }}
+    {% else %}
+        {{ start.day }}
+    {% endif %}
+{%- endmacro %}
+
+{% macro condense_month(start, end) -%}
+    {% if start.month != end.month %}
+        {{ start.strftime("%h") }}-{{ end.strftime("%h") }}
+    {% else %}
+        {{ start.strftime("%h") }}
+    {% endif %}
+{%- endmacro %}
+
+{% macro condense_time(start, end) -%}
+    {% if start.time() == end.time() %}
+        {{ start.strftime("%-l:%M %P") }}
+    {% elif start.strftime("%P") == end.strftime("%P") %}
+        {% if start.minute == 0 %}
+            {{ start.strftime("%-l") }}-{{ end.strftime("%-l:%M %P") }}
+        {% else %}
+            {{ start.strftime("%-l:%M") }}-{{ end.strftime("%-l:%M %P") }}
+        {% endif %}
+    {% else %}
+        {{ start.strftime("%-l:%M %P") }}-{{ end.strftime("%-l:%M %P") }}
+    {% endif %}
+{%- endmacro %}
+
+{% macro event_card(event, show_department=True, show_price=True) -%}
+    <div class="event-card">
+        <div class="event-date">
+            <div class="event-day">{{ condense_day(event.start_datetime, event.end_datetime) }}</div>
+            <div class="event-month">{{ condense_month(event.start_datetime, event.end_datetime) }}</div>
+        </div>
+        <div class="event-name">
+            {{ event.name }}
+            <div class="event-location">
+                {{ event.location }}
+            </div>
+        </div>
+        {% if show_price %}
+            <div class="event-price">
+                {{ "$%.2f"|format(event.price) if event.price != 0 else "Free" }}
+            </div>
+        {% endif %}
+        <div class="event-time">
+            {{ condense_time(event.start_datetime, event.end_datetime) }}
+        </div>
+
+        {% if show_department %}
+            <div class="event-department">
+                {{ event.department.name }}
+            </div>
+        {% endif %}
+        <div class="event-address">
+            <span class="event-address-line">{{ event.street }}</span>
+            <span class="event-address-line">{{ event.city }}{% if event.city and event.state %}
+                , {% endif %}{{ event.state }} {{ event.zip if event.zip else '' }}</span>
+            <span class="event-address-line">{{ event.country }}</span>
+        </div>
+    </div>
 {%- endmacro %}

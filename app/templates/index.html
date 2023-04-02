@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+{% from "macros.html" import event_card %}
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/templates/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/css/components/events.css') }}">
 {% endblock %}
 {% block header %}
     {{ super() }}
@@ -16,10 +18,17 @@
     <div id="department-navigation">
         {% for department in departments %}
             {% set nav_image_url = url_for('static', filename='/images/excluded/' ~ department.name|lower|replace(" ", "-") ~ '-nav.jpg') %}
-            <a href="{{ url_for("main." ~ department.name|lower|replace(" ", "_")) }}"
+            <a href="{{ "/" ~ department.name|lower|replace(" ", "_") }}"
                style="background-image: url('{{ nav_image_url }}')">
                 <div class="department-navigation-label">{{ department.name }}</div>
             </a>
         {% endfor %}
     </div>
+    <h1 class="section-title">Events</h1>
+    {% for event in events %}
+        {{ event_card(event) }}
+        {% if not loop.last %}
+            <div class="event-separator"></div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
