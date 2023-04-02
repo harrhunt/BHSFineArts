@@ -73,6 +73,8 @@ class Faculty(db.Model):
     email: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
     department_id: Mapped[int] = db.mapped_column(db.ForeignKey('departments.id'))
     department: Mapped['Department'] = db.relationship(back_populates='faculty')
+    image_id: Mapped[int] = db.mapped_column(db.ForeignKey('files.id'), nullable=True)
+    image: Mapped['File'] = db.relationship()
 
     def __repr__(self) -> str:
         return f"<Faculty {self.id}: {self.first_name} {self.last_name} ({self.department.name})>"

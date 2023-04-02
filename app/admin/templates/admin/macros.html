@@ -9,6 +9,7 @@
         {{ fieldset(form.position) }}
         {{ fieldset(form.email) }}
         {{ fieldset(form.department) }}
+        {{ fieldset(form.image) }}
         {{ form.submit }}
     </form>
 {%- endmacro %}
@@ -25,6 +26,8 @@
         <dd><a href="mailto:{{ faculty_member.email }}">{{ faculty_member.email }}</a></dd>
         <dt>Department</dt>
         <dd>{{ faculty_member.department.name }}</dd>
+        <dt>Photo</dt>
+        <dd><img alt="{{ faculty_member.image.name }}" src="{{ url_for('main.uploads', filename=faculty_member.image_id) }}"></dd>
     </dl>
 {% endmacro -%}
 

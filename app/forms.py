@@ -37,6 +37,7 @@ class FacultyForm(FlaskForm):
     position = StringField('Position')
     email = StringField('Email', validators=[Email()])
     department = QuerySelectField(get_label='name')
+    image = QuerySelectField(get_label='name')
     submit = SubmitField('Submit')
 
 
