@@ -13,8 +13,8 @@ IMAGE_FILE_EXT = ['.jpeg', '.jpg', '.png', '.gif']
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id: Mapped[int] = db.mapped_column(primary_key=True)
-    email: Mapped[str] = db.mapped_column(db.String(255), unique=True)
-    password: Mapped[str] = db.mapped_column(db.String(255))
+    email: Mapped[str] = db.mapped_column(db.String(255), nullable=False, unique=True)
+    password: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
     # username = db.Column(db.String(24), unique=True)
     # is_verified = db.Column(db.Boolean(), default=False)
     # last_active = db.Column(db.DateTime())
@@ -44,7 +44,7 @@ class File(db.Model):
     __tablename__ = "files"
     id: Mapped[int] = db.mapped_column(primary_key=True)
     basename: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
-    extension: Mapped[str] = db.mapped_column(db.String(255))
+    extension: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
     date_added: Mapped[datetime] = db.mapped_column(default=datetime.utcnow())
 
     @classmethod
@@ -67,10 +67,10 @@ class Faculty(db.Model):
     __tablename__ = "faculty"
     id: Mapped[int] = db.mapped_column(primary_key=True)
     first_name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
-    middle_name: Mapped[str] = db.mapped_column(db.String(255))
+    middle_name: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
     last_name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
-    position: Mapped[str] = db.mapped_column(db.String(255))
-    email: Mapped[str] = db.mapped_column(db.String(255))
+    position: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
+    email: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
     department_id: Mapped[int] = db.mapped_column(db.ForeignKey('departments.id'))
     department: Mapped['Department'] = db.relationship(back_populates='faculty')
 
@@ -82,15 +82,15 @@ class Event(db.Model):
     __tablename__ = "events"
     id: Mapped[int] = db.mapped_column(primary_key=True)
     name: Mapped[str] = db.mapped_column(db.String(255), nullable=False)
-    start_datetime: Mapped[datetime] = db.mapped_column()
-    end_datetime: Mapped[datetime] = db.mapped_column()
-    price: Mapped[float] = db.mapped_column()
-    location: Mapped[str] = db.mapped_column(db.String(255))
-    street: Mapped[str] = db.mapped_column(db.String(255))
-    city: Mapped[str] = db.mapped_column(db.String(255))
-    state: Mapped[str] = db.mapped_column(db.String(255))
-    zip: Mapped[int] = db.mapped_column()
-    country: Mapped[str] = db.mapped_column(db.String(255))
+    start_datetime: Mapped[datetime] = db.mapped_column(nullable=True)
+    end_datetime: Mapped[datetime] = db.mapped_column(nullable=True)
+    price: Mapped[float] = db.mapped_column(nullable=True)
+    location: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
+    street: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
+    city: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
+    state: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
+    zip: Mapped[int] = db.mapped_column(nullable=True)
+    country: Mapped[str] = db.mapped_column(db.String(255), nullable=True)
     department_id: Mapped[int] = db.mapped_column(db.ForeignKey('departments.id'))
     department: Mapped['Department'] = db.relationship(back_populates='events')
 
