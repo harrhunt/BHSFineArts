@@ -3,6 +3,7 @@ from app.models import User, Department, Faculty, Event, File
 from werkzeug.security import generate_password_hash
 # noinspection PyPackageRequirements
 import sass
+from fake_data import generate_fake
 
 sass.compile(dirname=('app/static/styles/sass', 'app/static/styles/css'), output_style='compressed')
 
@@ -34,5 +35,6 @@ def make_shell_context():
             'File': File,
             'Faculty': Faculty,
             'Event': Event,
-            'set_up_db': set_up_db
+            'set_up_db': set_up_db,
+            'generate_fake': generate_fake
             }
